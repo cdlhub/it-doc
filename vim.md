@@ -114,3 +114,9 @@ Ranges may precede most _colon_ commands and cause them to be executed on a line
  - **:'c**: marker c
  - **:%**: all lines in file
  - **:g/pattern/**: all lines that contain pattern
+
+## References
+
+- [LFCS: How to Install and Use vi/vim as a Full Text Editor](http://www.tecmint.com/vi-editor-usage/) by TecMint.
+- [Learn Useful ‘Vi/Vim’ Editor Tips and Tricks to Enhance Your Skills – Part 1](http://www.tecmint.com/learn-vi-and-vim-editor-tips-and-tricks-in-linux/) by TecMint.
+- [8 Interesting ‘Vi/Vim’ Editor Tips and Tricks for Every Linux Administrator – Part 2](http://www.tecmint.com/how-to-use-vi-and-vim-editor-in-linux/) by TecMint.
