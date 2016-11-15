@@ -36,6 +36,24 @@
 
 Use `-c` option if you don't want to create the file if it does not exist.
 
+## cat command
+
+Concatenate multiple files:
+
+```sh
+# Concatenate multiple files to one file
+cat <file1> <file2> <file3> > big_file
+
+# Concatenate and sort content of files
+cat <file1> <file2> <file3> | sort > sorted_big_file
+```
+
+## Find disk usage (df)
+
+- `df -h` -- Human readable format.
+- `df -T` -- Display type of volumes.
+- `df -a` -- Display information of all file system disk.
+
 ## Display progress bar
 
 **Reference:** [How to Monitor Progress of (Copy/Backup/Compress) Data using `pv` Command](http://www.tecmint.com/monitor-copy-backup-tar-progress-in-linux-using-pv-command/).
