@@ -36,9 +36,60 @@
 
 Use `-c` option if you don't want to create the file if it does not exist.
 
+## Display progress bar
+
+**Reference:** [How to Monitor Progress of (Copy/Backup/Compress) Data using `pv` Command](http://www.tecmint.com/monitor-copy-backup-tar-progress-in-linux-using-pv-command/).
+
+`pv` is used with other programs which lack the ability to monitor the progress of a an ongoing operation. You can use it, by placing it in a pipeline between two processes, with the appropriate options available.
+
+The syntax of `pv` command as follows:
+
+```sh
+pv file
+pv options file
+pv file > filename.out
+pv options | command > filename.out
+comand1 | pv | command2
+```
+
+- Copy a file: `pv source.file > destination.file`
+- Zip a file: `pv source.file | gzip > source.file.gz`
+
 ## sed command
 
 **Reference:** [LFCS: How to use GNU ‘sed’ Command to Create, Edit, and Manipulate files in Linux – Part 1](http://www.tecmint.com/sed-command-to-create-edit-and-manipulate-files-in-linux/) by TecMint.
+
+## Bash
+
+### Modify a string with regexp
+
+Use `sed` to modify a string in a variable and assign it to another:
+
+```sh
+# No spacea around '=' sign
+# Replace 'search' by 'replace' in $my_string and assign the result to $my_variable.
+my_variable=$(sed 's/search/replace/' <<<$my_string)
+```
+
+### Test if a command succeeded
+
+A succesful command always returns `0`. Shell `if <command>` statement tests if the command succeeded, that is when it returns `0`.
+
+```sh
+if command; then
+    echo "Success"
+else
+    echo "Failure"
+fi
+```
+
+If you just want to test for success or failure, whithout any output on `stdout` or `stderr`, you need to redirect all command outputs to `/dev/null`:
+
+```sh
+# stdout is redirected to /dev/null
+# stderr is redirected to stdin
+if command 1>/dev/null 2>&1; then
+```
 
 ## References
 
