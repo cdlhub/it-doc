@@ -51,8 +51,15 @@ cat <file1> <file2> <file3> | sort > sorted_big_file
 ## Find disk usage (df)
 
 - `df -h` -- Human readable format.
-- `df -T` -- Display type of volumes.
+- `df -T` -- Display type of volumes (Linux only, not MacOS X).
 - `df -a` -- Display information of all file system disk.
+- `df <folder>` -- Display info about the mounted volume the folder is in.
+
+## Display file and folder size
+
+- `du -h <folder>` -- Display folder and sub-folder size without individual files.
+- `du -a <folder>` -- Include individual files.
+```
 
 ## Display progress bar
 
