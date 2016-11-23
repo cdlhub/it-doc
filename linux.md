@@ -24,6 +24,7 @@
 - `ls -R` -- List sub-folder content recursively.
 - `ls -t` -- Sort files by latest modification first.
 - `ls -S` -- Sort by file size.
+- `ls -d */` -- List directories only.
 
 ## touch command (create empty file)
 
