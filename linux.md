@@ -117,6 +117,28 @@ If you just want to test for success or failure, whithout any output on `stdout`
 if command 1>/dev/null 2>&1; then
 ```
 
+## Find files
+
+How to find text in files (see [How to find all files containing specific text on Linux?](https://stackoverflow.com/questions/16956810/how-to-find-all-files-containing-specific-text-on-linux)):
+
+```sh
+grep -rnw '/path/to/somewhere/' -e "pattern"
+```
+- `-r` or `-R` is recursive,
+- `-n` is line number, and
+- `-w` stands match the whole word.
+- Along with these, `--exclude` or `--include` parameter could be used for efficient searching. It is also possible to exclude/include directories through `--exclude-dir` and `--include-dir` parameter.
+
+```sh
+# only search through the files which have .c or .h extensions
+grep --include=\*.{c,h} -rnw '/path/to/somewhere/' -e "pattern"
+
+# exclude searching all the files ending with .o extension
+grep --exclude=*.o -rnw '/path/to/somewhere/' -e "pattern"
+
+# use of --exclude-dir
+grep --exclude-dir={dir1,dir2,*.dst} -rnw '/path/to/somewhere/' -e "pattern"
+```
 ## Jobs
 
 - `jobs -l` -- List processes with ID.
