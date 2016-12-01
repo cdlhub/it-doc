@@ -149,6 +149,13 @@ grep --exclude-dir={dir1,dir2,*.dst} -rnw '/path/to/somewhere/' -e "pattern"
 - `Ctrl-Z` -- Stop the running job (still in the job list).
 - `kill -9 %<n>` -- Kill runnung job `n`.
 
+## MacOS X
+
+```sh
+# Force to eject a volume
+diskutil unmountDisk force /Volumes/DISK_NAME
+```
+
 ## References
 
 - [BEGINNER’S GUIDE FOR LINUX – Start Learning Linux in Minutes](http://www.tecmint.com/free-online-linux-learning-guide-for-beginners/) by TecMint, this course module is specially designed and compiled for those beginners, who want to make their way into Linux learning process and do the best in today’s IT organizations. This courseware is created as per requirements of industrial environment with complete entrance to Linux, which will help you to build a great success in Linux.
