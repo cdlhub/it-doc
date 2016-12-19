@@ -154,6 +154,9 @@ grep --exclude-dir={dir1,dir2,*.dst} -rnw '/path/to/somewhere/' -e "pattern"
 ```sh
 # Force to eject a volume
 diskutil unmountDisk force /Volumes/DISK_NAME
+
+# Create ISO image
+hdiutil makehybrid -iso -joliet -o ./IMAGE_NAME.iso /Volumes/DISK_NAME
 ```
 
 ## References
