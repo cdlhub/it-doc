@@ -2,7 +2,7 @@
 
 ## configuration
 
-### Create SSH keys (Linux, MacOS X)
+### Create SSH keys
 
 1. Create a pair of SSH key.
 
@@ -13,61 +13,73 @@
 2. Name your key based on its purpose (including `~/.ssh/` folder) and then enter a strong passphrase.
 
     ```sh
-    Enter file in which to save the key (/home/you/.ssh/id_rsa):  [~/.ssh/<id-github-user>_rsa]
+    Enter file in which to save the key (/home/you/.ssh/id_rsa):  [~/.ssh/<github-user>_id_rsa]
     ```
-4. Configure `ssh-agent` to remember your passphrase during each session time. Add the following snippet at the end of `.bashrc`.
 
-    ```sh
+4. Configure `ssh-agent` to remember your passphrase:
+    - **Linux**: Add the following snippet at the end of `.bashrc`.
 
-    # Automatically start ssh-agent and load the ssh-key(s) on login:
-    if [ -z "$SSH_AUTH_SOCK" ] ; then
-      eval `ssh-agent -s`
-      ssh-add
-    fi
-    ```
+        ```sh
+
+        # Automatically start ssh-agent and load the ssh-key(s) on login:
+        if [ -z "$SSH_AUTH_SOCK" ] ; then
+          eval `ssh-agent -s`
+          ssh-add
+        fi
+        ```
+    - **MacOS X**: Add your key to _Keychain_.
+
+        ```sh
+        $ ssh-add -K ~/.ssh/<github-user>_id_rsa
+        ```
 5. Add github.com to SSH known host.
 
     ```sh
-    you@EQECAT-LINUX:~$ ssh-keyscan -t rsa github.com > ~/.ssh/known_hosts
+    $ ssh-keyscan -t rsa github.com > ~/.ssh/known_hosts
     ```
 
-
-## SSH configuration for multiple GitHub account
+### SSH configuration for multiple GitHub account
 
 **Reference:** Adapted from [Multiple SSH Keys settings for different github account](https://gist.github.com/jexchan/2351996).
 
-Create one SSH key per GitHub account. You cannot use the same key for two different GitHub accounts.
+1. Create one SSH key per GitHub account. You cannot use the same key for two different GitHub accounts.
 
-```sh
-# Go to your SSH configuration folder.
-cd ~/.ssh
+    ```sh
+    # Name your key id_<github-user>_rsa
+    ssh-keygen -t rsa -b 4096 -C "your_email@youremail.com"
+    ssh-add ~/.ssh/<github-user>_id_rsa
+    # Under MacOS X you can even add it to your Keychain
+    # ssh-add -K ~/.ssh/<github-user>_id_rsa
+    ```
+1. Create a `config` file in `~/.ssh/` folder and add the two GitHub accounts:
 
-# Run the following command for each GitHub account.
-# Name your pair of key files with your GitHub user name: '<github-user>_rsa'.
-ssh-keygen -t rsa -b 4096 -C "your_email_1@youremail.com"
+    ```
+    # First account
+    Host github.com-<github-user-1>
+        HostName github.com
+        User git
+        IdentityFile ~/.ssh/<github-user-1>_id_rsa
 
-# Add your key to SSH agent
-ssh-add ~/.ssh/<github-user>_rsa
-# Under MacOS X you can even add it to your Keychain
-# ssh-add -K ~/.ssh/<github-user>_rsa
+    # Second account
+    Host github.com-<github-user-2>
+        HostName github.com
+        User git
+        IdentityFile ~/.ssh/<github-user-2>_id_rsa
+    ```
 
-# Add github.com to SSH known host.
-ssh-keyscan -t rsa github.com > ~/.ssh/known_hosts
-```
+1. Change the `[remote "origin"]` field in your local `.git/config` to use the Host defined in `.ssh/config` for each repository:
 
-Please refer to github ssh issues for common problems.
+    ```
+    [remote "origin"]
+            url = git@github.com-<github-user>:<github-user>/<repo>.git
+    ```
 
-for example, 2 keys created at:
+1. Don't forget to set `name` and `email` for your local repository configuration based on the GitHub user:
 
-~/.ssh/id_rsa_activehacker
-~/.ssh/id_rsa_jexchan
-
-then, add these two keys as following
-
-$ ssh-add ~/.ssh/id_rsa_activehacker
-$ ssh-add ~/.ssh/id_rsa_jexchan
-
-you can delete all cached keys before
+    ```sh
+    $ git config user.name "Your Name"
+    $ git config user.email "your_email@youremail.com"
+    ```
 
 $ ssh-add -D
 
@@ -83,17 +95,6 @@ $ subl -a config
 
 Then added
 
-#activehacker account
-Host github.com-activehacker
-    HostName github.com
-    User git
-    IdentityFile ~/.ssh/id_rsa_activehacker
-
-#jexchan account
-Host github.com-jexchan
-    HostName github.com
-    User git
-    IdentityFile ~/.ssh/id_rsa_jexchan
 
 Clone you repo and modify your Git config
 
