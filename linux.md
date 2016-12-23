@@ -157,6 +157,9 @@ diskutil unmountDisk force /Volumes/DISK_NAME
 
 # Create ISO image
 hdiutil makehybrid -iso -joliet -o ./IMAGE_NAME.iso /Volumes/DISK_NAME
+
+# Bypass application first start verification
+xattr -d com.apple.quarantine /Applications/APP_NAME.app
 ```
 
 ## References
