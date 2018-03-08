@@ -25,6 +25,29 @@ Beware that vim uses its own clipboard. You will have to use specific register t
 
 On systems that don't use X11 like OSX or Windows, the `"*` register is used to read and write to the system clipboard. You can specify the register to use before the copy/paste commands. e.g.: `"*yy` to copy the current line in the system clipboard and `"*p` to paste.
 
+### Visual mode
+
+1. Press `v` to enter visual mode (or uppercase `V` to select whole lines, or `Ctrl-v` to select rectangular blocks) and select characters.
+2. Move the cursor to the end of what you want to cut.
+3. Press `d` to cut (or `y` to copy).
+4. Move to where you would like to paste and press `P` to paste before the cursor, or `p` to paste after.
+
+- `d` stands for _delete_.
+- `y` stands for _yank_.
+
+### Normal mode
+
+In normal mode, one can copy (yank) with `y{motion}` (resp. delete with `d{motion}`), where `{motion}` is a Vim motion. For example, `yw` copies to the beginning of the next word. Other helpful yanking commands include:
+
+- `yy` or `Y` – yank the current line, including the newline character at the end of the line.
+`y$` – yank to the end of the current line (but don't yank the newline character).
+- `yiw` – yank the current word (excluding surrounding whitespace)
+- `yaw` – yank the current word (including leading or trailing whitespace)
+
+To copy into a register, one can use `"{register}` immediately **before** one of the above commands to copy into the register `{register}`. In normal and visual modes, `"xp` pastes the contents of the register `x`.
+
+This works with special registers as well: `"+p` (or `"*p`) pastes the contents of the clipboard, `"/p` pastes the last search, and `":p` pastes the last command.
+
 **Remark**: Copying/pasting from the system clipboard will not work if `:echo has('clipboard')` returns `0`. In this case, vim is not compiled with the `+clipboard` feature and you'll have to install a different version or recompile it.
 
 ## Undo/Redo
@@ -36,17 +59,22 @@ On systems that don't use X11 like OSX or Windows, the `"*` register is used to 
 
 ## Moves
 
- - **e**: Move to the end of a word.
- - **w**: Move forward to the beginning of a word.
- - **b**: Move backward to the beginning of a word.
- - **$**: Move to the end of the line.
- - **0**: Move to the beginning of the line.     
- - **gg**: Jump to beginning of file.
- - **G**: Jump to end of file.
- - **_n_G**: Jump to line _n_.
- - **'m**: Jump to the beginning of the line of mark `m`.
- - **``** (Two back ticks): Return to the cursor position before the latest jump (undo the jump).
- - **%**: Jump to corresponding item, e.g. from an open brace to its matching closing brace.
+**Reference:** http://vim.wikia.com/wiki/All_the_right_moves
+
+- **e**: Move to the end of a word.
+- **w**: Move forward to the beginning of a word.
+- **b**: Move backward to the beginning of a word.
+- **0**: Move to the beginning of the line.     
+- **$**: Move to the end of the line.
+- **gg**: Jump to beginning of file.
+- **G**: Jump to end of file.
+- **_n_G**: Jump to line _n_.
+- **H**:   move to top of screen
+- **M**: move to middle of screen
+- **L**: move to bottom of screen
+- **'m**: Jump to the beginning of the line of mark `m`.
+- **``** (Two back ticks): Return to the cursor position before the latest jump (undo the jump).
+- **%**: Jump to corresponding item, e.g. from an open brace to its matching closing brace.
 
 You can type f<character> to put the cursor on the next character and F<character> for the previous one. the unmentionedT will jump to after the first sought character to the left, and I can confirm that the ; and , repeaters work with all of f/F/t/T
 

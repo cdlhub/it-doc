@@ -1,5 +1,43 @@
 # Git
 
+## Git Prompt
+
+https://github.com/git/git/blob/master/contrib/completion/git-prompt.sh
+
+1. Download `git-prompt.sh`:
+
+    ```sh
+    curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh -o ~/.git-prompt.sh
+    ```
+2. Add the following lines to `.bash_profile`:
+
+    ```sh
+    if [ -f ~/.git-prompt.sh ]; then
+        source ~/.git-prompt.sh
+    else
+        echo "ERROR: First run 'curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh -o ~/.git-prompt.sh'"
+    fi
+    ```
+
+## Git Completion
+
+https://github.com/git/git/blob/master/contrib/completion/git-completion.bash
+
+1. Download `git-completion.bash`:
+
+    ```sh
+    curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -o ~/.git-completion.bash
+    ```
+2. Add the following lines to `.bash_profile`:
+
+    ```sh
+    if [ -f ~/.git-completion.bash ]; then
+        source ~/.git-completion.bash
+    else
+        echo "ERROR: First run 'curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -o ~/.git-completion.bash'"
+    fi
+    ```
+
 ## configuration
 
 ### Create SSH keys
