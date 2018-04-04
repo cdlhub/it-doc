@@ -42,6 +42,12 @@ https://github.com/git/git/blob/master/contrib/completion/git-completion.bash
 
 ### Create SSH keys
 
+Test your SSH connection:
+
+```sh
+ssh -T git@github.com
+```
+
 1. Create a pair of SSH key.
 
     ```sh
