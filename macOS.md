@@ -1,3 +1,17 @@
+## Prevent macOS to write .Trashes, .fseventsd, and .Spotlight-V100 to external drive
+
+See: http://blog.hostilefork.com/trashes-fseventsd-and-spotlight-v100/
+
+- To stop macOS from doing Spotlight indexing, you need a file called `.metadata_never_index` in the root directory of the removable drive.
+- To stop macOS from making a `.Trashes` directory, you need to make your own file that isn't a directory and call it `.Trashes`.
+- To keep it from doing logging of filesystem events on the drive, you need to make a directory called `.fseventsd` and inside that folder put a single file named `no_log`.
+
+## Secure File Deletion
+
+> Apple removed `srm` because they felt it didn't work well enough and because using it on a SSD decreases the overall life of the drive.
+
+Use `rm -P` instead.
+
 Stop application to auto-launch at startup
 ----------------
 
