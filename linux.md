@@ -31,7 +31,7 @@
     - [tar archive](#tar-archive)
     - [Untar archive](#untar-archive)
     - [List archive content](#list-archive-content)
-    - [Uar Usage and Options](#uar-usage-and-options)
+    - [Tar Usage and Options](#tar-usage-and-options)
 - [curl](#curl)
 - [Display progress bar](#display-progress-bar)
 - [sed command](#sed-command)
@@ -366,6 +366,7 @@ cat <file1> <file2> <file3> | sort > sorted_big_file
 
 - `du -h <folder>` -- Display folder and sub-folder size without individual files.
 - `du -a <folder>` -- Include individual files.
+- `du --max-depth=2` -- List subdirectories and their sizes to any desired level of depth.
 
 Sort output by decreasing size:
 
@@ -417,7 +418,7 @@ tar -tvf uploadprogress.tar
 tar -tvf uploadprogress.tar.gz
 ```
 
-### Uar Usage and Options
+### Tar Usage and Options
 
 - `c` – create a archive file.
 - `x` – extract a archive file.
@@ -429,6 +430,8 @@ tar -tvf uploadprogress.tar.gz
 - `r` – append or update files or directories to existing archive file.
 - `W` – Verify a archive file.
 - `--wildcards` – Specify patters in unix tar command.
+- `--exclude='PATTERN'`: exclude those files and directory which respect the pattern (using `*` and `?`)
+
 
 ## curl
 
