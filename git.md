@@ -173,3 +173,41 @@ I had to change the [remote "origin"] / url field in my local .git/config to use
         url = git@github.com-activehacker:activehacker/gfs.git
 
 Without that modification, git would just try to use my default ssh key.
+
+## Update GitHub fork repository
+
+```sh
+# Add the remote, call it "upstream":
+
+git remote add upstream https://github.com/whoever/whatever.git
+
+# Fetch all the branches of that remote into remote-tracking branches,
+# such as upstream/master:
+
+git fetch upstream
+
+# Make sure that you're on your master branch:
+
+git checkout master
+
+# Rewrite your master branch so that any commits of yours that
+# aren't already in upstream/master are replayed on top of that
+# other branch:
+
+git rebase upstream/master
+```
+
+If you don't want to rewrite the history of your master branch, (for example because other people may have cloned it) then you should replace the last command with `git merge upstream/master`. However, for making further pull requests that are as clean as possible, it's probably better to rebase.
+
+If you've rebased your branch onto upstream/master you may need to force the push in order to push it to your own forked repository on GitHub. You'd do that with:
+
+```sh
+git push -f origin master
+```
+
+You only need to use the `-f` the first time after you've rebased.
+
+Reference: https://stackoverflow.com/a/7244456
+
+Note: A quick note that rather than having to rebase your own master branch to ensure you are starting with clean state, you should probably work on a separate branch and make a pull request from that. This keeps your master clean for any future merges and it stops you from having to rewrite history with `-f` which messes up everyone that could have cloned your version.
+
