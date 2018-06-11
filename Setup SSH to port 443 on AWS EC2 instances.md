@@ -1,6 +1,6 @@
 ## Introduction
 
-**Obejctives:**
+**Objectives:**
 
 - The simplest solution over the more secure.
 - Create EC2 instances accessible from Office LAN only without a VPN.
