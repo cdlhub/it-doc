@@ -635,6 +635,8 @@ Options:
 - `--progress`: show the progress while transferring the data
 - `--include 'PATTERN'`: include only those files and directory which respect the pattern (using `*` and `?`)
 - `--exclude 'PATTERN'`: exclude those files and directory which respect the pattern (using `*` and `?`)
+- `-r`: copies data recursively (but don’t preserve timestamps and permission while transferring data
+- `-u, --update`: skip files that are newer on the receiver
 
 Troubleshooting:
 
