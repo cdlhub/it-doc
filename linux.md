@@ -17,7 +17,7 @@
 - [Partition](#partition)
 - [Directory Structure](#directory-structure)
     - [Difference Between /opt and /usr/local](#difference-between-opt-and-usrlocal)
-- [Environment variables](#environment-variables)
+- [Environment Variables](#environment-variables)
 - [pwd command](#pwd-command)
 - [pushd/popd (cd) command](#pushdpopd-cd-command)
 - [realpath command](#realpath-command)
@@ -291,9 +291,21 @@ On the other hand, `/opt` is a directory for installing unbundled packages, each
 
 Source: [What is the difference between /opt and /usr/local?](https://unix.stackexchange.com/questions/11544/what-is-the-difference-between-opt-and-usr-local/11552#11552)
 
-## Environment variables
+## Environment Variables
 
 See [Environment Variables](https://help.ubuntu.com/community/EnvironmentVariables) Ubuntu doc. Contains list of common standard variables.
+
+Shell mode and environment variables:
+
+| Interactive | Login | When | Environment |
+| ----------- | ----- | ---- | ----------- |
+| yes         | no    | - terminal emulator (i.e. `gnome-teminal`, `Terminal`...) | - reads `/etc/bash.bashrc` and then `~/.bashrc` |
+| yes         | yes   | - login to system with the command line<br/>- `ssh`<br/>- `su - <username>` | 1. sequentially reads `/etc/profile` and `/etc/profile.d/*` (in alphabetical order)<br/>2. looks for and reads the first of `~/.bash_profile` , `~/.bash_login`, and `~/.profile`, in that order |
+|             |       | - login with the UI | - `/etc/profile` (for many graphical shells like Ubuntu, but not all) |
+| no          | no    | - shell script |  |
+
+- Use `~/.bashrc` to set user specific environment variables in both login and non-login shell.
+- Use `/etc/profile`, `/etc/profile.d/*.sh`, or `/etc/environment` (beware that variable expansion does not work in `/etc/environment`) for system-wide environment.
 
 ## pwd command
 
@@ -477,6 +489,8 @@ comand1 | pv | command2
 ## sed command
 
 ## Bash
+
+See [Environment Variables](#environment-variables) for profile files read order.
 
 ### Special variables
 
