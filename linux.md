@@ -265,6 +265,14 @@ x   +   -   +   -   +   -   +   -
 
 Typical permissive option is: `fmask=0111,dmaks=0000`.
 
+When `umount` fails, you can list used files with `sudo fuser -vm <mount/point>`.
+
+Sample `fstab` record for NTFS file system:
+
+```
+UUID=02C461EBC461E201 /media/USBDVD1 ntfs rw,permissions,fmask=0111,dmaks=0000,auto,nosuid,nodev,allow_other 0 2
+```
+
 ## Directory Structure
 
 **See** [Linux Directory Structure and Important Files Paths Explained](http://www.tecmint.com/linux-directory-structure-and-important-files-paths-explained/)
