@@ -245,6 +245,21 @@ sudo parted /dev/<device>
 
 See [Introduction to fstab](https://help.ubuntu.com/community/Fstab) on `/etc/ƒstab` setup and options.
 
+The syntax of a fstab entry is:
+
+```
+[Device] [Mount Point] [File System Type] [Options] [Dump] [Pass]
+```
+
+| fields | description |
+| ------ | ----------- |
+| `[Device]` | The device/partition (by `/dev` location or `UUID`) that contain a file system. |
+| `[Mount Point]` | The directory on your root file system (aka mount point) from which it will be possible to access the content of the device/partition (note: swap has no mount point). Mount points should not have spaces in the names. |
+| `[File System Type]` | Type of file system (see [Linux Filesystems Explained](https://help.ubuntu.com/community/LinuxFilesystemsExplained)). |
+| `[Options]` | Mount options of access to the device/partition (see the man page for mount). |
+| `[Dump]` | Enable or disable backing up of the device/partition (the command dump). This field is usually set to 0, which disables it. |
+| `[Pass]` | Controls the order in which fsck checks the device/partition for errors at boot time. The root device should be 1. Other partitions should be 2, or 0 to disable checking. |
+
 `fmask` and `dmask` mount options are used to define permissions (`umask` sets them to both files and directories, while `fmask` only applies to files and `dmask` to directories).
 
 The masks are NOT the permissions of the file, they are used to get the permissions you want. In addition, masks can't add any permissions, they only limit what permissions a file or a directory can have.
