@@ -91,8 +91,6 @@ Docker files are series of command to build an image.
 
 ## Dockerfile
 
-A `RUN` command runs a command inside a container **and create an image** (layer) out of it.
-
 Best practices for `CMD` and `ENTRYPOINT` (ref: [Docker ENTRYPOINT & CMD: Dockerfile best practices](https://medium.freecodecamp.org/docker-entrypoint-cmd-dockerfile-best-practices-abc591c30e21)):
 
 > Both `CMD` and `ENTRYPOINT` instructions define what command gets executed when running a container. There are few rules that describe how they interact.
@@ -115,3 +113,7 @@ You can replace `-c` options with `-o %CPU` when you run the image:
 ```sh
 docker run <image> -o %CPU
 ```
+
+`ADD` and `COPY` are used to copy a file to the container. With `ADD` instruction, you can also specify a URL, or an archive, or a zipped file, while the `COPY` instruction does not handle URL, or unpacking/untarring of files.
+
+A `RUN` command runs a command inside a container **and create an image** (layer) out of it.
