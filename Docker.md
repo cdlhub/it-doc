@@ -91,4 +91,27 @@ Docker files are series of command to build an image.
 
 ## Dockerfile
 
-A `RUN` command runs a command inside a container **and create an image** out of it.
+A `RUN` command runs a command inside a container **and create an image** (layer) out of it.
+
+Best practices for `CMD` and `ENTRYPOINT` (ref: [Docker ENTRYPOINT & CMD: Dockerfile best practices](https://medium.freecodecamp.org/docker-entrypoint-cmd-dockerfile-best-practices-abc591c30e21)):
+
+> Both `CMD` and `ENTRYPOINT` instructions define what command gets executed when running a container. There are few rules that describe how they interact.
+>
+> 1. Dockerfiles should specify at least one of `CMD` or `ENTRYPOINT` commands.
+> 1. `ENTRYPOINT` should be defined when using the container as an executable.
+> 1. `CMD` should be used as a way of defining default arguments for an `ENTRYPOINT` command or for executing an ad-hoc command in a container.
+`CMD` will be overridden when running the container with alternative arguments.
+
+Example:
+
+```dockerfile
+FROM ubuntu
+ENTRYPOINT ["top", "-b"]
+CMD ["-c"]
+```
+
+You can replace `-c` options with `-o %CPU` when you run the image:
+
+```sh
+docker run <image> -o %CPU
+```
