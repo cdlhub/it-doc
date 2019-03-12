@@ -53,7 +53,7 @@ Docker files are series of command to build an image.
     docker ps -a
     ```
 
-- Run shell (and login as root) inside the container:
+- Run shell (and login as root) inside the container `-i` for _interactive_, and `-t` to allocate a _pseudo-tty_):
 
     ```sh
     docker exec -it <containerId> /bin/bash
@@ -88,3 +88,7 @@ Docker files are series of command to build an image.
     ```sh
     docker inspect <container-id>
     ````
+
+## Dockerfile
+
+A `RUN` command runs a command inside a container **and create an image** out of it.
