@@ -50,6 +50,12 @@
 
 Note that each command in a docker file creates a layer, hence an image.
 
+## Instructions
+
+* `CMD` and `ENTRYPOINT` instructions define what command gets executed when running a container.
+* `ADD` and `COPY` are used to copy a file to the container. With `ADD` instruction, you can also specify a URL, or an archive, or a zipped file, while the `COPY` instruction does not handle URL, or unpacking/untarring of files.
+* `RUN` runs a command inside a container and create a layer out of it.
+
 ## Best Practices
 
 * Minimize the number of packages you need per image.
@@ -77,7 +83,7 @@ Note that each command in a docker file creates a layer, hence an image.
         mysql
     ```
 
-* Both `CMD` and `ENTRYPOINT` instructions define what command gets executed when running a container (ref: [Docker ENTRYPOINT & CMD: Dockerfile best practices](https://medium.freecodecamp.org/docker-entrypoint-cmd-dockerfile-best-practices-abc591c30e21)):
+* [Docker ENTRYPOINT & CMD](https://medium.freecodecamp.org/docker-entrypoint-cmd-dockerfile-best-practices-abc591c30e21):
     > 1. Dockerfiles should specify at least one of `CMD` or `ENTRYPOINT` commands.
     > 1. `ENTRYPOINT` should be defined when using the container as an executable.
     > 1. `CMD` should be used as a way of defining default arguments for an `ENTRYPOINT` command or for executing an ad-hoc command in a container.
@@ -97,12 +103,6 @@ Note that each command in a docker file creates a layer, hence an image.
     ```sh
     docker run <image> -o %CPU
     ```
-
-## Instructions
-
-`ADD` and `COPY` are used to copy a file to the container. With `ADD` instruction, you can also specify a URL, or an archive, or a zipped file, while the `COPY` instruction does not handle URL, or unpacking/untarring of files.
-
-A `RUN` command runs a command inside a container **and create an image** (layer) out of it.
 
 ## Building Images
 
