@@ -67,7 +67,7 @@ Note that each command in a docker file creates a layer, hence an image.
     RUN apt-get install -y ...
     ```
 
-* Sort packages by name:
+* Sort packages by name for easier maintainance:
 
     ```dockerfile
     RUN apt-get update && apt-get install -y \
