@@ -27,22 +27,21 @@ To reverse the operation, use option `load`:
 launchctl load -w /Library/LaunchAgents/com.adobe.AdobeCreativeCloud.plist
 ```
 
-[Uninstalling Applications in Mac OS X](http://guides.macrumors.com/Uninstalling_Applications_in_Mac_OS_X)
-------------------
+## [Uninstalling Applications in Mac OS X](http://guides.macrumors.com/Uninstalling_Applications_in_Mac_OS_X)
 
-To manually remove an application and all associated files: 
- 
- - Launch Activity Monitor and change "My Processes" at the top to "All Processes", then make sure the app you want to remove is not running. If it is, quit the process before proceeding. 
- -	Launch Finder and search for the app name (hopefully unique, such as Skype) 
- -	You can narrow the search to specific folders or search your whole Mac 
- -	Searching "File Name" vs "Contents" usually provides better results. 
- -	Click the + button below the search term to add criteria 
- -	Click the search criteria drop-down and select "Other...", then "System files" 
- -	Click the "don't include" and change to "include" 
- -	Sort by name, kind, date, etc. to identify components of the app, such as folders, .plist files, cache files. etc. 
- -	Delete all files and folders related to the app. 
- -	Don't empty your Trash until you've determined that everything is working OK, in case you need to restore something you deleted by accident. 
- -	A reboot might be necessary to completely remove some apps. 
+To manually remove an application and all associated files:
+
+- Launch Activity Monitor and change "My Processes" at the top to "All Processes", then make sure the app you want to remove is not running. If it is, quit the process before proceeding.
+- Launch Finder and search for the app name (hopefully unique, such as Skype).
+- You can narrow the search to specific folders or search your whole Mac.
+- Searching "File Name" vs "Contents" usually provides better results.
+- Click the + button below the search term to add criteria.
+- Click the search criteria drop-down and select "Other...", then "System files".
+- Click the "don't include" and change to "include".
+- Sort by name, kind, date, etc. to identify components of the app, such as folders, .plist files, cache files. etc.
+- Delete all files and folders related to the app.
+- Don't empty your Trash until you've determined that everything is working OK, in case you need to restore something you deleted by accident.
+-A reboot might be necessary to completely remove some apps.
 
 ## Homebrew
 
