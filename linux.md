@@ -51,6 +51,7 @@
     - [Security Configuration](#security-configuration)
     - [Database](#database)
 - [MacOS X](#macos-x)
+- [Get Linux OS family](#get-linux-os-family)
 - [References](#references)
 
 <!-- /TOC -->
@@ -717,6 +718,12 @@ hdiutil makehybrid -iso -joliet -o ./IMAGE_NAME.iso /Volumes/DISK_NAME
 
 # Bypass application first start verification
 xattr -d com.apple.quarantine /Applications/APP_NAME.app
+```
+
+## Get Linux OS family
+
+```sh
+cat /etc/os-release | grep ID_LIKE | cut -d= -f2
 ```
 
 ## References
