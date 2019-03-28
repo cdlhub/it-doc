@@ -1,7 +1,10 @@
+# Ansible
+
 **Inventory file**: basically a list of grouped servers. They are setup in `/etc/ansible/hosts`:
 
-```
-[example]www.example.com
+```cfg
+[example]
+www.example.com
 
 [local-dev]
 192.168.xxx.xxx
@@ -22,7 +25,28 @@ Ansible allows admins to run ad-hoc commands on one or hundreds of machines at t
 Sample inventory file with multiple servers:
 
 ```
-# Lines beginning with a # are comments, and are only included for# illustration. These comments are overkill for most inventory files.# Application servers[app]192.168.60.4192.168.60.5# Database server[db]192.168.60.6# Group 'multi' with all servers[multi:children]appdb# Variables that will be applied to all servers[multi:vars]ansible_ssh_user=vagrantansible_ssh_private_key_file=~/.vagrant.d/insecure_private_key```
+# Lines beginning with a # are comments, and are only included for
+# illustration. These comments are overkill for most inventory files.
+
+# Application servers
+[app]
+192.168.60.4
+192.168.60.5
+
+# Database server
+[db]
+192.168.60.6
+
+# Group 'multi' with all servers
+[multi:children]
+app
+db
+
+# Variables that will be applied to all servers
+[multi:vars]
+ansible_ssh_user=vagrant
+ansible_ssh_private_key_file=~/.vagrant.d/insecure_private_key
+```
 
 **Remark:** Ansible assumes you’re using passwordless (key-based) login for SSH
 
@@ -48,7 +72,9 @@ ansible multi -a "free -m"
 ansible multi -a "date"
 
 # Sync date and time on servers
-ansible multi -s -a "service ntpd stop"ansible multi -s -a "ntpdate -q 0.rhel.pool.ntp.org"ansible multi -s -a "service ntpd start"
+ansible multi -s -a "service ntpd stop"
+ansible multi -s -a "ntpdate -q 0.rhel.pool.ntp.org"
+ansible multi -s -a "service ntpd start"
 ```
 
 Options:
@@ -60,11 +86,16 @@ Options:
 
 	```sh
 	# Example: apply the command to only the .4 server
-	# Limit hosts with a simple pattern (asterisk is a wildcard).	ansible app -s -a "service ntpd restart" --limit "*.4"
-		# Limit hosts with a regular expression (prefix with a tilde).	ansible app -s -a "service ntpd restart" --limit ~".*\.4"
+	# Limit hosts with a simple pattern (asterisk is a wildcard).
+	ansible app -s -a "service ntpd restart" --limit "*.4"
+	
+	# Limit hosts with a regular expression (prefix with a tilde).
+	ansible app -s -a "service ntpd restart" --limit ~".*\.4"
 	```
-- Run operations in the background (tell Ansible to run the commands asynchronously, and poll the servers to see when the commands finish). While a background task is running, you can also check on the status elsewhere using Ansible’s `async_status` module, as long as you have the `ansible_job_id` value to pass in as `jid` (`ansible multi -s -m async_status -a "jid=763350539037"`):	- `-B <seconds>` the maximum amount of time (in seconds) to let the job run.
-	- `-P <seconds>` the amount of time (in seconds) to wait between polling the servers for anupdated job status. Set `-P` to 0, so Ansible fires off the command then forgets about it. Running the command this way doesn’t allow status updates via `async_status` and a `jid`, but you can still inspect the file `∼/.ansible_async/<jid>` on the remote server.
+- Run operations in the background (tell Ansible to run the commands asynchronously, and poll the servers to see when the commands finish). While a background task is running, you can also check on the status elsewhere using Ansible’s `async_status` module, as long as you have the `ansible_job_id` value to pass in as `jid` (`ansible multi -s -m async_status -a "jid=763350539037"`):
+	- `-B <seconds>` the maximum amount of time (in seconds) to let the job run.
+	- `-P <seconds>` the amount of time (in seconds) to wait between polling the servers for an
+updated job status. Set `-P` to 0, so Ansible fires off the command then forgets about it. Running the command this way doesn’t allow status updates via `async_status` and a `jid`, but you can still inspect the file `∼/.ansible_async/<jid>` on the remote server.
 
 ## Modules
 
@@ -94,13 +125,15 @@ Use modules `mysql_*`.
 MySQL installs a database named `test` by default, and it is recommended that you remove the database as part of MySQL’s included `mysql_secure_installation` tool:
 
 ```yaml
-- name: Remove the MySQL test database.      mysql_db: db=test state=absent
+- name: Remove the MySQL test database.
+      mysql_db: db=test state=absent
 ```
 
 Create a database:
 
 ```yaml
-- name: Create a database for Drupal.      mysql_db: "db={{ domain }} state=present"
+- name: Create a database for Drupal.
+      mysql_db: "db={{ domain }} state=present"
 ```
 
 In MySQL’s case, Ansible uses the MySQLdb Python package (python-mysqldb) to manage a connection to the database server, and assumes the default root account credentials (‘root’ as the username with no password). Obviously, leaving this default would be a bad idea! On a production server, one of the first steps should be to change the root account password, limit the root account to localhost, and delete any nonessential database users.
@@ -108,20 +141,66 @@ In MySQL’s case, Ansible uses the MySQLdb Python package (python-mysqldb) to m
 If you use different credentials, you can add a .my.cnf file to your remote user’s home directory containing the database credentials to allow Ansible to connect to the MySQL database without leaving passwords in your Ansible playbooks or variable files. Otherwise, you can prompt the user running the Ansible playbook for a MySQL username and password. This option, using prompts, will be discussed later in the book.
 
 ### Create directories and files
-You can use the file module to create files and directories (like `touch`), manage permissions and ownership on files and directories, modify SELinux properties, and create symlinks.
-```sh# Create a directory
+
+You can use the file module to create files and directories (like `touch`), manage permissions and ownership on files and directories, modify SELinux properties, and create symlinks.
+
+```sh
+# Create a directory
 ansible multi -m file -a "dest=/tmp/test mode=644 state=directory"
 
-# Create a symlink (set state=link)ansible multi -m file -a "src=/src/symlink dest=/dest/symlink owner=root group=root state=link"
+# Create a symlink (set state=link)
+ansible multi -m file -a "src=/src/symlink dest=/dest/symlink owner=root group=root state=link"
 ```
 
-### Delete directories and filesYou can set the state to absent to delete a file or directory.```shansible multi -m file -a "dest=/tmp/test state=absent"
-```Also read the documentation for the other file-management modules like `lineinfile`, `ini_file`, and `unarchive`.
+### Delete directories and files
 
-### Deploy a version-controlled application```sh
-# First, update the git checkout to the application’s new version branch, 1.2.4, on all the app servers:ansible app -s -m git -a "repo=git://example.com/path/to/repo.git dest=/opt/myapp update=yes version=1.2.4"
+You can set the state to absent to delete a file or directory.
 
-# run the application’s update.sh shell script:ansible app -s -a "/opt/myapp/update.sh"
-```## Playbooks
+```sh
+ansible multi -m file -a "dest=/tmp/test state=absent"
+```
+
+Also read the documentation for the other file-management modules like `lineinfile`, `ini_file`, and `unarchive`.
+
+### Deploy a version-controlled application
+
+```sh
+# First, update the git checkout to the application’s new version branch, 1.2.4, on all the app servers:
+ansible app -s -m git -a "repo=git://example.com/path/to/repo.git dest=/opt/myapp update=yes version=1.2.4"
+
+# run the application’s update.sh shell script:
+ansible app -s -a "/opt/myapp/update.sh"
+```
+
+## Playbooks
 
 Ansible keeps track of the state of everything on all our servers. If you run the playbook the first time, it will provision the server. Even better, the second time you run it (if the server is in the correct state), it won’t actually do anything besides tell you nothing has changed. Additionally, running the playbook with the `--check` option verifies the configuration matches what’s defined in the playbook, without actually running the tasks on the server.
+
+## Tips
+
+### Gathering facts
+
+Gathering facts is used to collect information about the target and populate ansible variables. It uses python.
+
+You can disable gathering facts with `gather_facts: False` on `hosts:` level. If you want to run some tasks before gathering facts, you can first disable gathering facts, run tasks, and then gather tasks with `setup:`.
+
+Snippet to install python before you run tasks:
+
+```yaml
+---
+- hosts: all
+  become: true
+  gather_facts: False
+  
+  pre_tasks:
+
+    - name: install python
+      raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+
+    - name: gathering facts
+      setup:
+
+  tasks:
+
+    # ...
+```
